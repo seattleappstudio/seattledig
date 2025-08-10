@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Phone, Mail, MapPin, Send, CheckCircle, AlertCircle,
-  MessageSquare, ChevronDown, ChevronUp
-} from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,28 +14,27 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
+  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Set page title and meta description for SEO
     document.title = 'Contact Us | Seattle Digital Studio - Get Your Free Consultation';
-
+    
+    // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        'Contact Seattle Digital Studio for expert digital solutions. Get a free consultation for content creation, app development, technical writing, websites, and business automation services.'
-      );
+      metaDescription.setAttribute('content', 'Contact Seattle Digital Studio for expert digital solutions. Get a free consultation for content creation, app development, technical writing, websites, and business automation services.');
     }
-
+    
+    // Add/update keywords meta tag
     let keywordsMeta = document.querySelector('meta[name="keywords"]');
     if (!keywordsMeta) {
       keywordsMeta = document.createElement('meta');
       keywordsMeta.setAttribute('name', 'keywords');
       document.head.appendChild(keywordsMeta);
     }
-    keywordsMeta.setAttribute(
-      'content',
-      'contact Seattle Digital Studio, free consultation, digital solutions quote, Joe Perez contact, Seattle web development, business automation consultation'
-    );
+    keywordsMeta.setAttribute('content', 'contact Seattle Digital Studio, free consultation, digital solutions quote, Joe Perez contact, Seattle web development, business automation consultation');
   }, []);
 
   const services = [
@@ -48,153 +44,139 @@ const Contact: React.FC = () => {
     'No-code Websites',
     'Business Automation',
     'Other',
-    "I Don't Know",
+    "I Don't Know"
   ];
 
   const faqs = [
     {
-      question: 'What does Seattle Digital Studio do?',
-      answer:
-        'We specialize in digital content creation, no-code app development, and AI-powered automation for small businesses and professionals. Our services include blog writing and management, microapp development, technical documentation, no-code websites, and business process automation using platforms like Make.com and AI tools.',
+      question: "What does Seattle Digital Studio do?",
+      answer: "We specialize in digital content creation, no-code app development, and AI-powered automation for small businesses and professionals. Our services include blog writing and management, microapp development, technical documentation, no-code websites, and business process automation using platforms like Make.com and AI tools."
     },
     {
-      question: 'Who do you work with?',
-      answer:
-        'We work with solopreneurs, consultants, startups, nonprofits, and small teams ready to scale their digital operations. Our clients range from individual professionals looking to establish thought leadership through content to growing businesses needing automation solutions to streamline their operations.',
+      question: "Who do you work with?",
+      answer: "We work with solopreneurs, consultants, startups, nonprofits, and small teams ready to scale their digital operations. Our clients range from individual professionals looking to establish thought leadership through content to growing businesses needing automation solutions to streamline their operations."
     },
     {
-      question: 'What kinds of apps do you build?',
-      answer:
-        'We create lightweight web apps and internal tools using no-code, low-code, and AI-assisted full code methods. These include customer portals, internal dashboards, lead capture systems, workflow automation tools, and MVP prototypes. Our focus is on rapid development and practical solutions that solve real business problems.',
+      question: "What kinds of apps do you build?",
+      answer: "We create lightweight web apps and internal tools using no-code, low-code, and AI-assisted full code methods. These include customer portals, internal dashboards, lead capture systems, workflow automation tools, and MVP prototypes. Our focus is on rapid development and practical solutions that solve real business problems."
     },
     {
-      question: 'Do you offer content writing services?',
-      answer:
-        'Yes! We write technical documentation, blog posts, SOPs, and customer-facing content. Our content services include strategic blog writing and management, API documentation, user guides, standard operating procedures, marketing copy, and thought leadership articles. Any AI-assisted content is fully designed, reviewed, and edited with a professional writer in the loop.',
+      question: "Do you offer content writing services?",
+      answer: "Yes! We write technical documentation, blog posts, SOPs, and customer-facing content. Our content services include strategic blog writing and management, API documentation, user guides, standard operating procedures, marketing copy, and thought leadership articles. Any AI-assisted content is fully designed, reviewed, and edited with a professional writer in the loop."
     },
     {
-      question: 'How much do your services cost?',
-      answer:
-        "Projects start at $500 plus a setup fee with a business process audit, with flexible pricing for one-off builds or ongoing support. Blog writing and management typically runs 500-$1,000/month, microapp development ranges from $3,500-$10,000 depending on complexity, and automation setups start at $500 (for up to 3 workflows) with optional monthly maintenance. We provide detailed quotes based on your specific requirements.",
+      question: "How much do your services cost?",
+      answer: "Projects start at $500 plus a setup fee with a business process audit, with flexible pricing for one-off builds or ongoing support. Blog writing and management typically runs 500-$1,000/month, microapp development ranges from $3,500-$10,000 depending on complexity, and automation setups start at $500 (for up to 3 workflows) with optional monthly maintenance. We provide detailed quotes based on your specific requirements."
     },
     {
-      question: 'How long do projects typically take?',
-      answer:
-        'Most projects are delivered within 1–3 weeks, depending on complexity and scope. Microapps and documentation projects often complete in 1-2 months, while comprehensive automation setups or complex web applications generally take at least 6 weeks. Blog writing operates on monthly cycles with 4-8 posts per month on an ongoing basis.',
+      question: "How long do projects typically take?",
+      answer: "Most projects are delivered within 1–3 weeks, depending on complexity and scope. Microapps and documentation projects often complete in 1-2 months, while comprehensive automation setups or complex web applications generally take at least 6 weeks. Blog writing operates on monthly cycles with 4-8 posts per month on an ongoing basis."
     },
     {
-      question: 'Do you guarantee your work?',
-      answer:
-        "We offer this satisfaction guarantee: If you are dissatisfied with our work we will rework it for free within 30 days of project delivery, subject to terms and conditions. This covers functionality issues, content revisions, and ensuring deliverables meet the agreed-upon specifications. But we don't add features for free if you change your mind about what you want. We're committed to your success and stand behind the quality of our work.",
+      question: "Do you guarantee your work?",
+      answer: "We offer this satisfaction guarantee: If you are dissatisfied with our work we will rework it for free within 30 days of project delivery, subject to terms and conditions. This covers functionality issues, content revisions, and ensuring deliverables meet the agreed-upon specifications. But we don't add features for free if you change your mind about what you want. We're committed to your success and stand behind the quality of our work."
     },
     {
       question: "What's your tech stack?",
-      answer:
-        'We use modern, reliable platforms including Bubble and Webflow for app prototyping, WordPress and React with TypeScript for websites, Make.com and Zapier for automation, and various LLM-based tools for content optimization and vibe coding. Our tool selection prioritizes ease of maintenance, scalability, and long-term viability for your business.',
+      answer: "We use modern, reliable platforms including Bubble and Webflow for app prototyping, WordPress and React with TypeScript for websites, Make.com and Zapier for automation, and various LLM-based tools for content optimization and vibe coding. Our tool selection prioritizes ease of maintenance, scalability, and long-term viability for your business."
     },
     {
-      question: 'Do you provide ongoing support and maintenance?',
-      answer:
-        'Yes, we offer ongoing support packages for all our services. This includes monthly blog writing retainers, automation monitoring and optimization, website maintenance, and documentation updates. Support packages are tailored to your needs and can include everything from minor updates to strategic consulting.',
-    },
+      question: "Do you provide ongoing support and maintenance?",
+      answer: "Yes, we offer ongoing support packages for all our services. This includes monthly blog writing retainers, automation monitoring and optimization, website maintenance, and documentation updates. Support packages are tailored to your needs and can include everything from minor updates to strategic consulting."
+    }
   ];
 
-  // --- Validation ---
+  // Validation rules
   const validateField = (name: string, value: string): string => {
     switch (name) {
       case 'name':
         if (!value.trim()) return 'Name is required';
         if (value.trim().length < 2) return 'Name must be at least 2 characters';
         if (value.trim().length > 50) return 'Name must be less than 50 characters';
-        if (!/^[a-zA-Z\s'-]+$/.test(value.trim()))
-          return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) return 'Name can only contain letters, spaces, hyphens, and apostrophes';
         return '';
+      
       case 'email':
         if (!value.trim()) return 'Email is required';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
-          return 'Please enter a valid email address';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value.trim())) return 'Please enter a valid email address';
         if (value.length > 100) return 'Email must be less than 100 characters';
         return '';
+      
       case 'service':
         if (!value) return 'Please select a service';
         return '';
+      
       case 'message':
         if (!value.trim()) return 'Message is required';
         if (value.trim().length < 10) return 'Message must be at least 10 characters';
         if (value.trim().length > 1000) return 'Message must be less than 1000 characters';
         return '';
+      
       default:
         return '';
     }
   };
 
-  const validateForm = (): Record<string, string> => {
+  // Validate all fields
+  const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
-    (Object.keys(formData) as Array<keyof typeof formData>).forEach((key) => {
-      const error = validateField(key, formData[key]);
+    
+    Object.keys(formData).forEach(key => {
+      const error = validateField(key, formData[key as keyof typeof formData]);
       if (error) newErrors[key] = error;
     });
+
     setErrors(newErrors);
-    return newErrors;
+    return Object.keys(newErrors).length === 0;
   };
 
+  // Handle field blur (for real-time validation)
   const handleBlur = (field: string) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
+    setTouched(prev => ({ ...prev, [field]: true }));
     const error = validateField(field, formData[field as keyof typeof formData]);
-    setErrors((prev) => ({ ...prev, [field]: error }));
+    setErrors(prev => ({ ...prev, [field]: error }));
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  // Handle field change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user starts typing (if field was touched)
     if (touched[name]) {
       const error = validateField(name, value);
-      setErrors((prev) => ({ ...prev, [name]: error }));
+      setErrors(prev => ({ ...prev, [name]: error }));
     }
   };
 
-  // --- Netlify: encode + submit ---
-  const encode = (data: Record<string, string>) =>
-    new URLSearchParams(data).toString();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
+    // Mark all fields as touched
     const allTouched = Object.keys(formData).reduce((acc, key) => {
       acc[key] = true;
       return acc;
     }, {} as Record<string, boolean>);
     setTouched(allTouched);
 
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      const firstErrorField = Object.keys(newErrors)[0];
-      if (firstErrorField) document.getElementById(firstErrorField)?.focus();
+    // Validate form
+    if (!validateForm()) {
+      // Focus on first error field
+      const firstErrorField = Object.keys(errors)[0];
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField);
+        element?.focus();
+      }
       return;
     }
 
     setIsSubmitting(true);
+    
+    // Simulate form submission
     try {
-      const payload = {
-        'form-name': 'contact', // must match form name below
-        name: formData.name,
-        email: formData.email,
-        service: formData.service,
-        message: formData.message,
-        'bot-field': '', // honeypot
-      };
-
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(payload),
-      });
-
-      if (!res.ok) throw new Error(`Network error: ${res.status}`);
-
+      await new Promise(resolve => setTimeout(resolve, 1500));
       setIsSubmitted(true);
       setFormData({ name: '', email: '', service: '', message: '' });
       setErrors({});
@@ -207,14 +189,16 @@ const Contact: React.FC = () => {
     }
   };
 
-  const getFieldError = (field: string): string =>
-    touched[field] ? errors[field] || '' : '';
+  // Get field error display
+  const getFieldError = (field: string): string => {
+    return touched[field] ? errors[field] || '' : '';
+  };
 
+  // Get field classes
   const getFieldClasses = (field: string, baseClasses: string): string => {
     const hasError = touched[field] && errors[field];
-    const isValid =
-      touched[field] && !errors[field] && (formData[field as keyof typeof formData] ?? '') !== '';
-
+    const isValid = touched[field] && !errors[field] && formData[field as keyof typeof formData];
+    
     let classes = baseClasses;
     if (hasError) {
       classes += ' border-red-500 focus:ring-red-500 focus:border-red-500';
@@ -223,9 +207,11 @@ const Contact: React.FC = () => {
     } else {
       classes += ' border-gray-300 focus:ring-pacific focus:border-transparent';
     }
+    
     return classes;
   };
 
+  // Toggle FAQ item
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
@@ -251,31 +237,17 @@ const Contact: React.FC = () => {
             {/* Contact Form */}
             <div className="animate-slide-up">
               <h2 className="text-2xl font-bold text-charcoal mb-6">Send us a message</h2>
-
+              
               {isSubmitted ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center animate-scale-in">
                   <CheckCircle className="mx-auto text-green-500 mb-4" size={48} />
                   <h3 className="text-xl font-bold text-green-800 mb-2">Message Sent Successfully!</h3>
-                  <p className="text-green-600">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                  <p className="text-green-600">
+                    Thank you for reaching out. We'll get back to you within 24 hours.
+                  </p>
                 </div>
               ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="space-y-6"
-                  noValidate
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
-                >
-                  {/* Netlify hidden inputs */}
-                  <input type="hidden" name="form-name" value="contact" />
-                  <p className="hidden">
-                    <label>
-                      Don’t fill this out if you’re human: <input name="bot-field" />
-                    </label>
-                  </p>
-
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   {/* Name Field */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-charcoal mb-2">
@@ -350,10 +322,7 @@ const Contact: React.FC = () => {
                       value={formData.service}
                       onChange={handleChange}
                       onBlur={() => handleBlur('service')}
-                      className={getFieldClasses(
-                        'service',
-                        'w-full px-4 py-3 rounded-lg transition-colors appearance-none bg-white'
-                      )}
+                      className={getFieldClasses('service', 'w-full px-4 py-3 rounded-lg transition-colors appearance-none bg-white')}
                       aria-describedby={getFieldError('service') ? 'service-error' : undefined}
                     >
                       <option value="">Select a service...</option>
@@ -390,10 +359,7 @@ const Contact: React.FC = () => {
                       value={formData.message}
                       onChange={handleChange}
                       onBlur={() => handleBlur('message')}
-                      className={getFieldClasses(
-                        'message',
-                        'w-full px-4 py-3 rounded-lg transition-colors resize-none'
-                      )}
+                      className={getFieldClasses('message', 'w-full px-4 py-3 rounded-lg transition-colors resize-none')}
                       placeholder="Tell us about your project or how we can help..."
                       aria-describedby={getFieldError('message') ? 'message-error' : undefined}
                     />
@@ -412,11 +378,7 @@ const Contact: React.FC = () => {
                           </div>
                         )}
                       </div>
-                      <span
-                        className={`text-sm ${
-                          formData.message.length > 1000 ? 'text-red-600' : 'text-gray-500'
-                        }`}
-                      >
+                      <span className={`text-sm ${formData.message.length > 1000 ? 'text-red-600' : 'text-gray-500'}`}>
                         {formData.message.length}/1000
                       </span>
                     </div>
@@ -441,7 +403,10 @@ const Contact: React.FC = () => {
                     )}
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center">* Required field.</p>
+                  {/* Form Footer */}
+                  <p className="text-sm text-gray-500 text-center">
+                    * Required field.
+                  </p>
                 </form>
               )}
             </div>
@@ -449,7 +414,7 @@ const Contact: React.FC = () => {
             {/* Contact Info */}
             <div className="animate-scale-in">
               <h2 className="text-2xl font-bold text-charcoal mb-6">Contact Information</h2>
-
+              
               <div className="space-y-6 mb-8">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-pacific to-pacific-dark rounded-lg flex items-center justify-center flex-shrink-0">
@@ -495,10 +460,12 @@ const Contact: React.FC = () => {
               <div className="bg-gradient-to-br from-pacific/5 to-pacific-dark/5 rounded-2xl p-8">
                 <h3 className="text-lg font-bold text-charcoal mb-4">Response Time</h3>
                 <p className="text-gray-600 mb-4">
-                  We typically respond to e-mail inquiries within 24 hours during our business hours. For urgent matters,
-                  please call or text directly.
+                  We typically respond to e-mail inquiries within 24 hours during our business hours. 
+                  For urgent matters, please call or text directly.
                 </p>
-                <p className="text-sm text-gray-500">Business Hours: Monday - Thursday, 9:00 AM - 4:00 PM PST</p>
+                <p className="text-sm text-gray-500">
+                  Business Hours: Monday - Thursday, 9:00 AM - 4:00 PM PST
+                </p>
               </div>
             </div>
           </div>
@@ -527,25 +494,32 @@ const Contact: React.FC = () => {
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-pacific focus:ring-inset"
                   aria-expanded={openFaqIndex === index}
                 >
-                  <h3 className="text-lg font-semibold text-charcoal pr-4">{faq.question}</h3>
+                  <h3 className="text-lg font-semibold text-charcoal pr-4">
+                    {faq.question}
+                  </h3>
                   {openFaqIndex === index ? (
                     <ChevronUp className="text-pacific flex-shrink-0" size={20} />
                   ) : (
                     <ChevronDown className="text-pacific flex-shrink-0" size={20} />
                   )}
                 </button>
-
+                
                 {openFaqIndex === index && (
                   <div className="px-6 pb-4 animate-slide-up">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </div>
                 )}
               </div>
             ))}
           </div>
 
+          {/* FAQ Footer */}
           <div className="text-center mt-12 animate-slide-up">
-            <p className="text-gray-600 mb-4">Still have questions? We're here to help.</p>
+            <p className="text-gray-600 mb-4">
+              Still have questions? We're here to help.
+            </p>
             <a
               href="mailto:hello@seattledigitalstudio.com"
               className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pacific to-pacific-dark text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -555,21 +529,6 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Hidden Netlify build-time form (ensures Netlify detects fields during build) */}
-      <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <select name="service">
-          <option value="">Select a service...</option>
-          {services.map((service) => (
-            <option key={service} value={service}>
-              {service}
-            </option>
-          ))}
-        </select>
-        <textarea name="message" />
-      </form>
     </div>
   );
 };
