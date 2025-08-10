@@ -40,7 +40,7 @@ const Solutions: React.FC = () => {
         'Content repurposing across channels'
       ],
       gradient: 'from-pacific to-pacific-dark',
-      image: '/images/joe-in-park-with-book.png',
+      image: '/images/what-we-do-blogging.png',
       imageAlt: 'Man reading AI Business Automation book on tablet while sitting on park bench',
       link: '/solutions/blog-writing-management'
     },
