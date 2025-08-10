@@ -284,7 +284,7 @@ const Home: React.FC = () => {
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-xl">
                   <img
-                    src="/images/seattle-digital-studio.png"
+                    src="/images/seattle-digital-studio-overview.png"
                     alt="Seattle Digital Studio - Professional digital solutions workspace"
                     className="w-full h-auto object-cover"
                   />
@@ -446,7 +446,7 @@ const Home: React.FC = () => {
                 <div className="w-full max-w-md mx-auto lg:max-w-none">
                   <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-pacific/10 to-pacific-dark/10 p-2">
                     <img
-                      src="/images/joe-for-sds-homepage.png"
+                      src="/images/joe-perez-photo.png"
                       alt="Joe Perez - Founder of Seattle Digital Studio"
                       className="w-full h-full object-cover rounded-2xl"
                     />
@@ -462,7 +462,7 @@ const Home: React.FC = () => {
             <div className="animate-slide-up order-1 lg:order-2">
               <h2 className="text-3xl sm:text-4xl font-bold text-charcoal mb-6">Meet Joe Perez</h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Joe Perez is Founder and Digital Solutions Manager at Seattle Digital Studio. His background includes a decade of experience as Principal of a boutique editorial consultancy combined with extensive experience as a technical writer embedded in software development teams at Microsoft, Google, Electronic Arts, and Grafana Labs. He is an Honors graduate of Harvard University and holds a Graduate Certificate in Integral Leadership from the Leadership Institute of Seattle (LIOS). 
+                Joe Perez is Founder and Digital Solutions Manager at Seattle Digital Studio. His background includes a decade of experience as Principal of a boutique editorial consultancy combined with extensive experience as a technical writer embedded in software development teams at Microsoft, Google, Electronic Arts, and Grafana Labs. He is an Honors graduate of Harvard University and holds a Graduate Certificate in Integral Leadership from Pacific Integral/Leadership Institute of Seattle (LIOS). 
               </p>
               
               {/* Credentials */}

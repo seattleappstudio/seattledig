@@ -373,7 +373,7 @@ const Blog: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/company/seattledig/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
@@ -381,7 +381,7 @@ const Blog: React.FC = () => {
                   LinkedIn
                 </a>
                 <a
-                  href="https://x.com"
+                  href="https://x.com/seattledig"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-3 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
@@ -389,10 +389,12 @@ const Blog: React.FC = () => {
                   X (Twitter)
                 </a>
                 <Link
-                  to="/contact"
+                  to="https://facebook.com/seattledig"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center px-3 py-2 bg-pacific text-white text-sm font-medium rounded-lg hover:bg-pacific-dark transition-colors"
                 >
-                  Newsletter
+                  Facebook
                 </Link>
               </div>
             </div>
