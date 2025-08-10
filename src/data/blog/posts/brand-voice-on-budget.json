@@ -1,0 +1,18 @@
+{
+  "id": "brand-voice-on-budget",
+  "title": "Brand Voice on a Budget: Finding and Refining Your Company's Tone",
+  "slug": "brand-voice-on-budget",
+  "excerpt": "Discover how to develop a distinctive brand voice with limited time and resources, creating authentic communication that resonates with your audience.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-09",
+  "categories": ["blog-writing", "strategy", "content"],
+  "tags": ["brand voice", "brand strategy", "content strategy", "small business branding", "budget marketing"],
+  "readingTime": 6,
+  "featured": false,
+  "image": "/images/blog-wavelength.png",
+  "seo": {
+    "metaDescription": "Learn how to develop a powerful brand voice on a budget. Practical strategies for small businesses to create authentic, consistent communication.",
+    "keywords": ["brand voice", "brand strategy", "small business branding", "content strategy", "budget branding"]
+  },
+  "contentFile": "brand-voice-on-budget.md"
+}

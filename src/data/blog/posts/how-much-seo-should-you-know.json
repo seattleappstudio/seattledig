@@ -1,0 +1,18 @@
+{
+  "id": "how-much-seo-should-you-know",
+  "title": "How Much Should You Know About SEO? Just Enough to Ask the Right Questions (and Ignore the Hype)",
+  "slug": "how-much-seo-should-you-know",
+  "excerpt": "A practical guide for business owners who need to understand SEO well enough to make smart decisions without getting lost in technical details or falling for SEO snake oil.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-21",
+  "categories": ["content", "strategy", "tools"],
+  "tags": ["SEO basics", "business owners", "search engine optimization", "SEO strategy", "digital marketing", "SEO myths"],
+  "readingTime": 3,
+  "featured": false,
+  "image": "/images/blog-seo.png",
+  "seo": {
+    "metaDescription": "Learn exactly how much SEO knowledge business owners need to make smart decisions and avoid common pitfalls. Practical SEO guidance without the hype.",
+    "keywords": ["SEO for business owners", "SEO basics", "search engine optimization", "SEO strategy", "digital marketing basics"]
+  },
+  "contentFile": "how-much-seo-should-you-know.md"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "how-i-use-ai",
+  "title": "How I Use AI (and How I Don't)",
+  "slug": "how-i-use-ai",
+  "excerpt": "Real-world insights on where automation shines—and where human judgment still matters in professional digital work.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-18",
+  "categories": ["automation", "strategy", "tools"],
+  "tags": ["AI tools", "ChatGPT", "Make.com", "workflow automation", "business strategy", "human judgment"],
+  "readingTime": 3,
+  "featured": false,
+  "image": "/images/blog-beach.png",
+  "seo": {
+    "metaDescription": "Learn how Joe Perez strategically uses AI tools like ChatGPT and Make.com while maintaining human oversight for critical business decisions.",
+    "keywords": ["AI tools", "ChatGPT", "Make.com", "workflow automation", "business AI strategy", "human judgment"]
+  },
+  "contentFile": "how-i-use-ai.md"
+}

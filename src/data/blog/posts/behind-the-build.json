@@ -1,0 +1,18 @@
+{
+  "id": "behind-the-build",
+  "title": "Behind the Build: A Step-by-Step Walkthrough of a Seattle Digital Studio Project",
+  "slug": "behind-the-build",
+  "excerpt": "From intake to delivery—what it's like to launch a lean digital project with us. An inside look at our proven process for delivering results.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-07",
+  "categories": ["development", "strategy", "documentation"],
+  "tags": ["project process", "client workflow", "digital project management", "Seattle Digital Studio", "project delivery"],
+  "readingTime": 6,
+  "featured": true,
+  "image": "/images/blog-our-process.png",
+  "seo": {
+    "metaDescription": "Go behind the scenes of a Seattle Digital Studio project. Learn our proven process for delivering digital solutions from intake to launch.",
+    "keywords": ["project process", "digital project management", "client workflow", "project delivery", "Seattle Digital Studio"]
+  },
+  "contentFile": "behind-the-build.md"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "app-website-maintenance",
+  "title": "App & Website Maintenance: What Happens After Launch?",
+  "slug": "app-website-maintenance",
+  "excerpt": "Your blog or app is live—here's what needs monthly attention to keep it performing optimally, secure, and delivering value to your users.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-02",
+  "categories": ["development", "tools", "strategy"],
+  "tags": ["website maintenance", "app maintenance", "post-launch support", "website optimization", "technical maintenance"],
+  "readingTime": 4,
+  "featured": false,
+  "image": "/images/app-website-maintenance.png",
+  "seo": {
+    "metaDescription": "Complete guide to app and website maintenance after launch. Learn what needs monthly attention to keep your digital assets performing optimally.",
+    "keywords": ["website maintenance", "app maintenance", "post-launch support", "website optimization", "digital asset management"]
+  },
+  "contentFile": "app-website-maintenance.md"
+}

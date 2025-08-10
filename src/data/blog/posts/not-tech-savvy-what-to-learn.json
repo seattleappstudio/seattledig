@@ -1,0 +1,18 @@
+{
+  "id": "not-tech-savvy-what-to-learn",
+  "title": "I'm Not Tech-Savvy. What Should I Learn? A Starter Guide for Business Owners Launching Their First App or Website",
+  "slug": "not-tech-savvy-what-to-learn",
+  "excerpt": "A practical roadmap for non-technical business owners who need to understand just enough about technology to make smart decisions about their first app or website project.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-29",
+  "categories": ["development", "strategy"],
+  "tags": ["non-technical", "business owners", "technology basics", "app development", "website development", "tech literacy"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-novice.png",
+  "seo": {
+    "metaDescription": "Essential technology knowledge for non-technical business owners launching their first app or website. Learn what you need to know to make smart decisions.",
+    "keywords": ["non-technical business owners", "technology basics", "app development guide", "website development", "tech literacy for business"]
+  },
+  "contentFile": "not-tech-savvy-what-to-learn.md"
+}

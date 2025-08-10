@@ -1,0 +1,18 @@
+{
+  "id": "why-websites-break",
+  "title": "Why Websites Break (And How to Stop It): Common Causes of Downtime and Slow Performance",
+  "slug": "why-websites-break",
+  "excerpt": "Discover the most common causes of website downtime and slow performance, plus proven strategies to prevent them and keep your site running smoothly.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-08",
+  "categories": ["development", "tools", "strategy"],
+  "tags": ["website downtime", "website performance", "site reliability", "web hosting", "website troubleshooting"],
+  "readingTime": 6,
+  "featured": false,
+  "image": "/images/blog-dual-monitors.png",
+  "seo": {
+    "metaDescription": "Learn why websites break and how to prevent downtime and slow performance. Expert guide to website reliability and performance optimization.",
+    "keywords": ["website downtime", "website performance", "site reliability", "website troubleshooting", "web hosting issues"]
+  },
+  "contentFile": "why-websites-break.md"
+}

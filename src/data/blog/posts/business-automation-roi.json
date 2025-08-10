@@ -1,0 +1,18 @@
+{
+  "id": "business-automation-roi",
+  "title": "Calculating ROI for Business Automation: A Complete Guide",
+  "slug": "business-automation-roi",
+  "excerpt": "Learn how to measure and maximize the return on investment for your business automation initiatives.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-10",
+  "categories": ["automation", "strategy"],
+  "tags": ["ROI", "business automation", "productivity", "cost savings"],
+  "readingTime": 4,
+  "featured": false,
+  "image": "/images/blog-grafana.png",
+  "seo": {
+    "metaDescription": "Master the art of calculating ROI for business automation projects with proven frameworks and real-world examples.",
+    "keywords": ["automation ROI", "business automation", "productivity measurement", "cost-benefit analysis"]
+  },
+  "contentFile": "business-automation-roi.md"
+}

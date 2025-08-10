@@ -1,0 +1,18 @@
+{
+  "id": "start-blog-build-career",
+  "title": "Start a Blog, Build Your Career (or Ruin It): The Double-Edged Sword of Professional Blogging",
+  "slug": "start-blog-build-career",
+  "excerpt": "Discover how strategic blogging can transform your career trajectory, open unexpected doors, and establish your professional authority—while avoiding the common pitfalls that can damage your reputation.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-05",
+  "categories": ["career-marketing", "blog-writing", "strategy"],
+  "tags": ["career development", "professional blogging", "personal branding", "thought leadership", "content strategy", "career advancement"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-expert-blogger.png",
+  "seo": {
+    "metaDescription": "Learn how strategic blogging can accelerate your career growth, establish professional authority, and create unexpected opportunities—while avoiding the common pitfalls that can damage your reputation.",
+    "keywords": ["career blogging", "professional blog strategy", "blogging for career advancement", "thought leadership", "personal branding", "content marketing for professionals"]
+  },
+  "contentFile": "start-blog-build-career.md"
+}

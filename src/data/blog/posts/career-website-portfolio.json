@@ -1,0 +1,18 @@
+{
+  "id": "career-website-portfolio",
+  "title": "Your Career Deserves a Website: Why Every Professional Needs a Digital Portfolio (and How We Build It)",
+  "slug": "career-website-portfolio",
+  "excerpt": "From LinkedIn to lasting impressions—how Joe Perez crafts personal brand sites that open doors and tell your unique story with professional polish and strategic positioning.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-11",
+  "categories": ["career-marketing", "strategy", "content"],
+  "tags": ["professional portfolio", "personal branding", "career website", "digital portfolio", "professional website", "personal brand"],
+  "readingTime": 7,
+  "featured": true,
+  "image": "/images/blog-kitchens-portfolio.png",
+  "seo": {
+    "metaDescription": "Learn why every professional needs a digital portfolio website and how to create one that opens doors and advances your career with strategic personal branding.",
+    "keywords": ["professional portfolio website", "personal branding", "career website", "digital portfolio", "professional online presence"]
+  },
+  "contentFile": "career-website-portfolio.md"
+}

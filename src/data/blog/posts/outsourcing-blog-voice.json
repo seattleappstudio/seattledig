@@ -1,0 +1,18 @@
+{
+  "id": "outsourcing-blog-voice",
+  "title": "Outsourcing Your Blog Without Losing Your Voice: How to Delegate Content and Still Sound Like You",
+  "slug": "outsourcing-blog-voice",
+  "excerpt": "Learn how to delegate content creation while maintaining your authentic brand voice and ensuring outsourced content sounds genuinely like your business.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-30",
+  "categories": ["blog-writing", "strategy", "content"],
+  "tags": ["content outsourcing", "brand voice", "content delegation", "blog management", "content strategy"],
+  "readingTime": 4,
+  "featured": false,
+  "image": "/images/blog-blogpost.png",
+  "seo": {
+    "metaDescription": "Master the art of outsourcing blog content while preserving your unique brand voice. Learn proven strategies for content delegation that maintains authenticity.",
+    "keywords": ["content outsourcing", "brand voice", "blog delegation", "content management", "outsourced content"]
+  },
+  "contentFile": "outsourcing-blog-voice.md"
+}

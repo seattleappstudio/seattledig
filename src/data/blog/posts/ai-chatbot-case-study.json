@@ -1,0 +1,18 @@
+{
+  "id": "ai-chatbot-case",
+  "title": "AI & Automation for Small Business: The Case for a Chatbot on Your Website",
+  "slug": "ai-chatbot-case",
+  "excerpt": "Discover how AI assistants can transform your lead capture, customer service, and FAQ handling while reducing workload and improving customer satisfaction.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-01",
+  "categories": ["automation", "strategy", "tools"],
+  "tags": ["AI chatbots", "customer service automation", "lead capture", "small business AI", "website optimization"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-chatbot-case.png",
+  "seo": {
+    "metaDescription": "Learn how AI chatbots can revolutionize your small business operations through automated lead capture, customer service, and FAQ handling.",
+    "keywords": ["AI chatbots", "small business automation", "customer service AI", "lead capture automation", "website chatbots"]
+  },
+  "contentFile": "ai-chatbot-case-study.md"
+}

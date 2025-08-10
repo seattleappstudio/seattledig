@@ -1,0 +1,18 @@
+{
+  "id": "maintenance-checklist",
+  "title": "Your Maintenance Checklist: A Simple Guide for Keeping Your Blog or App Healthy Year-Round",
+  "slug": "maintenance-checklist",
+  "excerpt": "A comprehensive, actionable maintenance checklist that keeps your blog or app running smoothly, secure, and optimized for performance throughout the year.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-23",
+  "categories": ["development", "tools", "documentation"],
+  "tags": ["maintenance checklist", "website maintenance", "app maintenance", "site optimization", "maintenance schedule"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-juggling.png",
+  "seo": {
+    "metaDescription": "Complete maintenance checklist for blogs and apps. Keep your digital assets healthy with this comprehensive guide to routine maintenance tasks.",
+    "keywords": ["maintenance checklist", "website maintenance", "app maintenance", "site optimization", "digital asset maintenance"]
+  },
+  "contentFile": "maintenance-checklist.md"
+}

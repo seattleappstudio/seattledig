@@ -1,0 +1,18 @@
+{
+  "id": "content-repurposing-strategy",
+  "title": "One Blog Post, Six Uses: How to Repurpose a Single Article Across Platforms",
+  "slug": "content-repurposing-strategy",
+  "excerpt": "Learn how to repurpose a single article across platforms to maximize exposure and get the most value from your content creation efforts.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-16",
+  "categories": ["content", "blog-writing", "strategy"],
+  "tags": ["content repurposing", "content strategy", "social media", "content marketing", "productivity"],
+  "readingTime": 6,
+  "featured": false,
+  "image": "/images/blog-repurpose.png",
+  "seo": {
+    "metaDescription": "Master content repurposing with proven strategies to transform one blog post into multiple formats across all platforms for maximum reach.",
+    "keywords": ["content repurposing", "content strategy", "social media content", "content marketing", "blog strategy"]
+  },
+  "contentFile": "content-repurposing-strategy.md"
+}

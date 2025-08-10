@@ -1,0 +1,18 @@
+{
+  "id": "professional-blog-writing-guide",
+  "title": "The Professional's Guide to Blog Writing That Converts Readers Into Customers",
+  "slug": "professional-blog-writing-guide",
+  "excerpt": "Master the art of professional blog writing with proven techniques that transform casual readers into engaged customers and drive measurable business results.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-31",
+  "categories": ["blog-writing", "content", "strategy"],
+  "tags": ["blog writing", "content strategy", "conversion optimization", "professional writing"],
+  "readingTime": 7,
+  "featured": true,
+  "image": "/images/blog-funnel.png",
+  "seo": {
+    "metaDescription": "Learn professional blog writing techniques that convert readers into customers. Master content strategy, SEO optimization, and conversion-focused writing.",
+    "keywords": ["professional blog writing", "content strategy", "blog conversion", "business blogging"]
+  },
+  "contentFile": "professional-blog-writing-guide.md"
+}

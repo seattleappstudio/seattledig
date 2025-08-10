@@ -1,0 +1,18 @@
+{
+  "id": "blog-content-management",
+  "title": "Blog Content Management: The Content Calendar That Keeps Clients Coming Back",
+  "slug": "blog-content-management",
+  "excerpt": "Discover why planning is 80% of blogging success and learn how to create content calendars that drive consistent engagement and client retention.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-08",
+  "categories": ["blog-writing", "content", "strategy"],
+  "tags": ["content calendar", "blog management", "content planning", "editorial calendar", "content strategy"],
+  "readingTime": 4,
+  "featured": false,
+  "image": "/images/blog-calendar.png",
+  "seo": {
+    "metaDescription": "Master blog content management with strategic content calendars. Learn why planning is 80% of blogging success and how to keep clients engaged.",
+    "keywords": ["blog content management", "content calendar", "editorial planning", "blog strategy", "content planning"]
+  },
+  "contentFile": "blog-content-management.md"
+}

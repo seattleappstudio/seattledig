@@ -1,0 +1,18 @@
+{
+  "id": "automation-tools-comparison",
+  "title": "Make.com vs. Zapier vs. ChatGPT Plugins: Choosing the Right Automation Tool for Your Business Workflows",
+  "slug": "automation-tools-comparison",
+  "excerpt": "Navigate the automation landscape with our comprehensive comparison of Make.com, Zapier, and ChatGPT plugins to find the perfect workflow solution for your business.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-04",
+  "categories": ["automation", "tools", "strategy"],
+  "tags": ["Make.com", "Zapier", "ChatGPT plugins", "workflow automation", "business automation", "tool comparison"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-tools.png",
+  "seo": {
+    "metaDescription": "Compare Make.com, Zapier, and ChatGPT plugins to choose the best automation tool for your business workflows. Expert analysis and recommendations included.",
+    "keywords": ["Make.com vs Zapier", "workflow automation tools", "ChatGPT plugins", "business automation comparison", "automation platform selection"]
+  },
+  "contentFile": "automation-tools-comparison.md"
+}

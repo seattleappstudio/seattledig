@@ -1,0 +1,18 @@
+{
+  "id": "publishing-vs-promoting",
+  "title": "Publishing vs. Promoting: Why Posting Your Blog Is Only the First Step—And What Comes Next",
+  "slug": "publishing-vs-promoting",
+  "excerpt": "Discover why publishing your blog post is just the beginning and learn the essential promotion strategies that turn content into business results.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-01",
+  "categories": ["blog-writing", "content", "strategy"],
+  "tags": ["content promotion", "blog marketing", "content distribution", "social media marketing", "content strategy"],
+  "readingTime": 6,
+  "featured": false,
+  "image": "/images/blog-promoting.png",
+  "seo": {
+    "metaDescription": "Learn why blog promotion is more important than publishing. Master content distribution strategies that amplify reach and drive real business results.",
+    "keywords": ["content promotion", "blog marketing", "content distribution", "blog promotion strategies", "content amplification"]
+  },
+  "contentFile": "publishing-vs-promoting.md"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "react-vs-wordpress-guide",
+  "title": "Technical Stack Decisions: React or WordPress? How We Choose",
+  "slug": "react-vs-wordpress-guide",
+  "excerpt": "Learn the Seattle Digital Studio method for selecting the right technology stack for each project, from React applications to WordPress sites.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-04",
+  "categories": ["development", "strategy", "tools"],
+  "tags": ["React", "WordPress", "technology stack", "web development", "platform selection", "technical decisions"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-wordpress-react.png",
+  "seo": {
+    "metaDescription": "Expert guide to choosing between React and WordPress for your project. Learn our proven decision framework for selecting the right technology stack.",
+    "keywords": ["React vs WordPress", "technology stack selection", "web development platforms", "technical decision making", "platform comparison"]
+  },
+  "contentFile": "react-vs-wordpress-guide.md"
+}

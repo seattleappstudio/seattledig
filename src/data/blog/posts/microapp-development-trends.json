@@ -1,0 +1,18 @@
+{
+  "id": "microapp-development-trends",
+  "title": "Microapp Development Trends: Why Small Apps Are Big Business",
+  "slug": "microapp-development-trends",
+  "excerpt": "Explore the rise of microapps and how they're revolutionizing business software development in 2025.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-25",
+  "categories": ["development", "strategy"],
+  "tags": ["microapps", "no-code", "app development", "business software"],
+  "readingTime": 6,
+  "featured": false,
+  "image": "/images/blog-mobile-apps.png",
+  "seo": {
+    "metaDescription": "Discover why microapps are transforming business software development and how to leverage this trend for your business.",
+    "keywords": ["microapp development", "no-code apps", "business software", "app development trends"]
+  },
+  "contentFile": "microapp-development-trends.md"
+}

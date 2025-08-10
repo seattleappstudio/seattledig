@@ -1,0 +1,18 @@
+{
+  "id": "chatbot-case-study",
+  "title": "The $99 Chatbot That Saves You Hours a Week: A Real-World Case Study on Automating Customer Q&A with AI",
+  "slug": "chatbot-case-study",
+  "excerpt": "Discover how a small consulting firm implemented a $99/month chatbot that reduced customer service time by 15 hours per week while improving response times and customer satisfaction.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-14",
+  "categories": ["automation", "strategy", "tools"],
+  "tags": ["chatbot case study", "AI automation", "customer service ROI", "small business automation", "cost-effective AI"],
+  "readingTime": 13,
+  "featured": true,
+  "image": "/images/blog-chatbot.png",
+  "seo": {
+    "metaDescription": "Real case study: How a $99 chatbot saved 15 hours per week in customer service while improving satisfaction. Includes implementation details and ROI analysis.",
+    "keywords": ["chatbot case study", "AI ROI", "customer service automation", "small business chatbot", "automation success story"]
+  },
+  "contentFile": "chatbot-case-study.md"
+}

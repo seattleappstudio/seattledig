@@ -1,0 +1,18 @@
+{
+  "id": "joe-perez-writes-like-you-talk",
+  "title": "Joe Perez Writes Like You Talk—Only Better: Why Seattle Digital Studio Blends Tech Expertise with Editorial Craft",
+  "slug": "joe-perez-writes-like-you-talk",
+  "excerpt": "Discover how Joe Perez combines Harvard-educated writing skills with decades of tech experience to create content that sounds authentically like your business—only more polished and effective.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-22",
+  "categories": ["blog-writing", "content", "strategy"],
+  "tags": ["Joe Perez", "editorial voice", "content creation", "business writing", "authentic voice", "Harvard writing"],
+  "readingTime": 4,
+  "featured": false,
+  "image": "/images/joe-walking.png",
+  "seo": {
+    "metaDescription": "Learn how Joe Perez's unique blend of Harvard education and tech expertise creates authentic, effective business content that sounds like you—only better.",
+    "keywords": ["Joe Perez", "business writing", "editorial voice", "content creation", "authentic writing", "tech writing"]
+  },
+  "contentFile": "joe-perez-writes-like-you-talk.md"
+}

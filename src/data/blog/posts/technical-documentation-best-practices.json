@@ -1,0 +1,18 @@
+{
+  "id": "technical-documentation-best-practices",
+  "title": "Technical Documentation That Developers Actually Use",
+  "slug": "technical-documentation-best-practices",
+  "excerpt": "Learn the secrets to creating technical documentation that developers love to read and actually use in their daily work.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-06",
+  "categories": ["documentation", "development"],
+  "tags": ["technical writing", "developer experience", "API documentation", "documentation"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-apis.png",
+  "seo": {
+    "metaDescription": "Master the art of technical documentation with proven strategies that improve developer experience and reduce support burden.",
+    "keywords": ["technical documentation", "developer documentation", "API docs", "technical writing"]
+  },
+  "contentFile": "technical-documentation-best-practices.md"
+}

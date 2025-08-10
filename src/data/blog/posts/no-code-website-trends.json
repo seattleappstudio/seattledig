@@ -1,0 +1,18 @@
+{
+  "id": "no-code-website-trends",
+  "title": "No-Code Website Development: Trends and Best Practices for 2025",
+  "slug": "no-code-website-trends",
+  "excerpt": "Discover the latest trends in no-code website development and learn best practices for building professional sites without coding.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-28",
+  "categories": ["development", "tools"],
+  "tags": ["no-code", "website development", "Webflow", "WordPress"],
+  "readingTime": 5,
+  "featured": false,
+  "image": "/images/blog-bubble.png",
+  "seo": {
+    "metaDescription": "Explore no-code website development trends for 2025 and learn best practices for building professional websites without coding.",
+    "keywords": ["no-code websites", "website development", "Webflow", "no-code trends"]
+  },
+  "contentFile": "no-code-website-trends.md"
+}

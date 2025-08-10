@@ -1,0 +1,18 @@
+{
+  "id": "automation-strategies-2025",
+  "title": "AI Automation Strategies That Actually Work in 2025",
+  "slug": "automation-strategies-2025",
+  "excerpt": "Discover practical AI automation techniques that save time and money for small businesses and growing teams.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-03",
+  "categories": ["automation", "strategy"],
+  "tags": ["AI", "Make.com", "workflow", "productivity"],
+  "readingTime": 4,
+  "featured": true,
+  "image": "/images/blog-repetitive-task.png",
+  "seo": {
+    "metaDescription": "Learn proven AI automation strategies that small businesses use to save 15+ hours per week",
+    "keywords": ["AI automation", "workflow optimization", "Make.com", "business automation"]
+  },
+  "contentFile": "automation-strategies-2025.md"
+}

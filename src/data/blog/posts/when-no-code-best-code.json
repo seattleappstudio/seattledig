@@ -1,0 +1,18 @@
+{
+  "id": "when-no-code-best-code",
+  "title": "When No-Code Is the Best Code: How We Evaluate Platforms Like Bubble, Webflow, and WordPress for Speed and Scale",
+  "slug": "when-no-code-best-code",
+  "excerpt": "Discover our proven framework for evaluating no-code platforms and learn when Bubble, Webflow, and WordPress deliver better results than custom development.",
+  "author": "Joe Perez",
+  "publishDate": "2025-08-07",
+  "categories": ["development", "tools", "strategy"],
+  "tags": ["no-code platforms", "Bubble", "Webflow", "WordPress", "platform evaluation", "rapid development"],
+  "readingTime": 6,
+  "featured": true,
+  "image": "/images/blog-race.png",
+  "seo": {
+    "metaDescription": "Expert guide to evaluating no-code platforms like Bubble, Webflow, and WordPress. Learn when no-code delivers better results than custom development.",
+    "keywords": ["no-code platforms", "Bubble vs Webflow", "no-code evaluation", "rapid development", "platform comparison"]
+  },
+  "contentFile": "when-no-code-best-code.md"
+}

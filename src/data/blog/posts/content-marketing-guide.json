@@ -1,0 +1,18 @@
+{
+  "id": "content-marketing-guide",
+  "title": "A Quick Guide to Content Marketing for Small Businesses",
+  "slug": "content-marketing-guide",
+  "excerpt": "Learn how to create a content marketing strategy that drives real business results without breaking the bank.",
+  "author": "Joe Perez",
+  "publishDate": "2025-07-15",
+  "categories": ["content", "strategy"],
+  "tags": ["content marketing", "SEO", "small business", "blogging"],
+  "readingTime": 5,
+  "featured": true,
+  "image": "/images/blog-content-marketing.png",
+  "seo": {
+    "metaDescription": "Complete content marketing guide for small businesses. Learn strategy, creation, and distribution tactics that drive results.",
+    "keywords": ["content marketing", "small business marketing", "content strategy", "blog marketing"]
+  },
+  "contentFile": "content-marketing-guide.md"
+}

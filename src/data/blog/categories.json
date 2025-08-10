@@ -1,0 +1,50 @@
+{
+  "automation": {
+    "id": "automation",
+    "name": "Automation",
+    "description": "AI workflows, Make.com integrations, and business process automation",
+    "color": "#1CA9C9"
+  },
+  "content": {
+    "id": "content",
+    "name": "Content Marketing",
+    "description": "Blog writing, SEO strategies, and content creation best practices",
+    "color": "#1693A5"
+  },
+  "development": {
+    "id": "development",
+    "name": "Development",
+    "description": "App development, no-code solutions, and technical tutorials",
+    "color": "#3FBBDB"
+  },
+  "strategy": {
+    "id": "strategy",
+    "name": "Business Strategy",
+    "description": "Digital transformation, growth strategies, and business optimization",
+    "color": "#0F7B8A"
+  },
+  "documentation": {
+    "id": "documentation",
+    "name": "Documentation",
+    "description": "Technical writing, process documentation, and knowledge management",
+    "color": "#2BB3D4"
+  },
+  "tools": {
+    "id": "tools",
+    "name": "Tools & Resources",
+    "description": "Software recommendations, productivity tools, and resource guides",
+    "color": "#1A8FA8"
+  },
+  "blog-writing": {
+    "id": "blog-writing",
+    "name": "Blog Writing",
+    "description": "Professional blog writing techniques, content strategy, and editorial best practices",
+    "color": "#0D8AA3"
+  },
+  "career-marketing": {
+    "id": "career-marketing",
+    "name": "Career Marketing",
+    "description": "Professional branding, resume development, and career advancement strategies",
+    "color": "#0A7D96"
+  }
+}
