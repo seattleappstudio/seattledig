@@ -1,19 +1,20 @@
+// netlify/edge-functions/prerender.ts
 const BOT_PATTERNS = [
   /googlebot/i,
   /bingbot/i,
   /yandex/i,
   /duckduckbot/i,
   /baiduspider/i,
-  /facebookexternalhit/i,
-  /LinkedInBot/i,
-  /Twitterbot/i,
-  /Slackbot/i,
-  /Discordbot/i,
-  /WhatsApp/i,
-  /TelegramBot/i,
-  /Pinterestbot/i,
-  /SkypeUriPreview/i,
-  /Applebot/i,
+  /facebookexternalhit/i, // Facebook
+  /linkedinbot/i,         // LinkedIn
+  /twitterbot/i,
+  /slackbot/i,
+  /discordbot/i,
+  /whatsapp/i,
+  /telegrambot/i,
+  /pinterestbot/i,
+  /skypeuripreview/i,
+  /applebot/i,
 ];
 
 function isBot(ua: string) {
@@ -23,25 +24,63 @@ function isBot(ua: string) {
 export default async (request: Request, context: any) => {
   try {
     const ua = request.headers.get("user-agent") || "";
-    const accept = request.headers.get("accept") || "";
-    const isHtmlGet = (request.method === "GET" || request.method === "HEAD") && accept.includes("text/html");
+    const isGetOrHead = request.method === "GET" || request.method === "HEAD";
 
-    if (!isHtmlGet || !isBot(ua)) return context.next();
+    // Only prerender for GET/HEAD from known bots
+    if (!isGetOrHead || !isBot(ua)) {
+      return context.next();
+    }
 
     const token = Deno.env.get("PRERENDER_TOKEN");
-    if (!token) return context.next(); // Fall back to SPA if token missing
+    if (!token) {
+      // No token configured — fall back to SPA
+      const downstream = await context.next();
+      return new Response(await downstream.text(), {
+        status: downstream.status,
+        headers: {
+          ...Object.fromEntries(downstream.headers),
+          "x-prerender-debug": "no-token",
+        },
+      });
+    }
 
     const prerenderUrl = "https://service.prerender.io/" + request.url;
-    const resp = await fetch(prerenderUrl, { headers: { "X-Prerender-Token": token, "User-Agent": ua } });
+    const resp = await fetch(prerenderUrl, {
+      headers: {
+        "X-Prerender-Token": token,
+        "User-Agent": ua,
+      },
+    });
 
-    if (!resp.ok) return context.next();
+    if (resp.ok) {
+      const html = await resp.text();
+      return new Response(html, {
+        status: resp.status,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "public, max-age=600",
+          "x-prerender-debug": "hit",
+        },
+      });
+    }
 
-    const html = await resp.text();
-    return new Response(html, {
-      status: resp.status,
-      headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=600" },
+    // Fallback to normal SPA if prerender fails
+    const downstream = await context.next();
+    return new Response(await downstream.text(), {
+      status: downstream.status,
+      headers: {
+        ...Object.fromEntries(downstream.headers),
+        "x-prerender-debug": "miss",
+      },
     });
   } catch {
-    return context.next();
+    const downstream = await context.next();
+    return new Response(await downstream.text(), {
+      status: downstream.status,
+      headers: {
+        ...Object.fromEntries(downstream.headers),
+        "x-prerender-debug": "error",
+      },
+    });
   }
 };
