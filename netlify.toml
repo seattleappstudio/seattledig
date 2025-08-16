@@ -1,3 +1,9 @@
+# Run prerender for all paths
+[[edge_functions]]
+  path = "/*"
+  function = "prerender"
+
+# Catch-all SPA (for humans)
 [[redirects]]
   from = "/*"
   to = "/index.html"

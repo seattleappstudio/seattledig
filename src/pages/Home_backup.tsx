@@ -1,30 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, FileText, Smartphone, Bot, Globe, Star, Quote, DollarSign, Zap, Clock, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
-function ensureMeta(propertyOrName: { property?: string; name?: string }) {
-  const selector = propertyOrName.property
-    ? `meta[property="${propertyOrName.property}"]`
-    : `meta[name="${propertyOrName.name}"]`;
-  let el = document.querySelector(selector) as HTMLMetaElement | null;
-  if (!el) {
-    el = document.createElement("meta");
-    if (propertyOrName.property) el.setAttribute("property", propertyOrName.property);
-    if (propertyOrName.name) el.setAttribute("name", propertyOrName.name);
-    document.head.appendChild(el);
-  }
-  return el!;
-}
-
-function setLink(rel: string, href: string) {
-  let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", rel);
-    document.head.appendChild(link);
-  }
-  link.setAttribute("href", href);
-  return link!;
-}
 
 const Home: React.FC = () => {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
@@ -135,53 +111,6 @@ const Home: React.FC = () => {
     // Signal Prerender.io
     (window as any).prerenderReady = true;
     // --- /SDS additions ---
-
-    // --- SDS: Absolute OG/Twitter + canonical + prerender ---
-    (() => {
-      const absoluteUrl = "https://seattledigitalstudio.com/";
-      const absoluteImageUrl = "https://seattledigitalstudio.com/images/social-home.jpg"; // must exist (1200x630)
-
-      // local helpers (scoped here to avoid name collisions)
-      const ensureOg = (prop: string) => {
-        let el = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
-        if (!el) {
-          el = document.createElement("meta");
-          el.setAttribute("property", prop);
-          document.head.appendChild(el);
-        }
-        return el;
-      };
-      const ensureTw = (name: string) => {
-        let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
-        if (!el) {
-          el = document.createElement("meta");
-          el.setAttribute("name", name);
-          document.head.appendChild(el);
-        }
-        return el;
-      };
-      const ensureCanonical = () => {
-        let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-        if (!link) {
-          link = document.createElement("link");
-          link.setAttribute("rel", "canonical");
-          document.head.appendChild(link);
-        }
-        return link;
-      };
-
-      // set values
-      ensureOg("og:url").setAttribute("content", absoluteUrl);
-      ensureOg("og:image").setAttribute("content", absoluteImageUrl);
-      ensureCanonical().setAttribute("href", absoluteUrl);
-
-      ensureTw("twitter:card").setAttribute("content", "summary_large_image");
-      ensureTw("twitter:image").setAttribute("content", absoluteImageUrl);
-
-      (window as any).prerenderReady = true;
-    })();
-    // --- /SDS ---
-
 }, []);
 
   const services = [

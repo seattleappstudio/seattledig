@@ -32,7 +32,7 @@ function setLink(rel: string, href: string) {
 
 const SITE_ORIGIN = "https://seattledigitalstudio.com";
 
-const BlogPost: React.FC = () => {
+export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
@@ -54,7 +54,7 @@ const BlogPost: React.FC = () => {
         return;
       }
 
-      // Load markdown if present (your blogUtils has loadMarkdownContent)
+      // Load markdown if present
       if (foundPost.contentFile && foundPost.contentFile.endsWith(".md")) {
         const postContent = await loadMarkdownContent(foundPost.contentFile);
         setContent(postContent);
@@ -64,17 +64,17 @@ const BlogPost: React.FC = () => {
 
       // ---------- SEO / Social meta (absolute URLs) ----------
       const absolutePostUrl = `${SITE_ORIGIN}/blog/${foundPost.slug}`;
-
       const imageIsAbsolute =
         typeof foundPost.image === "string" && /^(https?:)?\/\//i.test(foundPost.image);
       const absoluteImageUrl = foundPost.image
         ? imageIsAbsolute
           ? foundPost.image
           : `${SITE_ORIGIN}${foundPost.image.startsWith("/") ? "" : "/"}${foundPost.image}`
-        : `${SITE_ORIGIN}/images/social-default.jpg`; // ensure this exists or change
+        : `${SITE_ORIGIN}/images/social-default.jpg`; // create this or change
 
       const title = foundPost.title || "Seattle Digital Studio";
-      const description = foundPost.seo?.metaDescription || foundPost.excerpt || "Seattle Digital Studio blog post";
+      const description =
+        foundPost.seo?.metaDescription || foundPost.excerpt || "Seattle Digital Studio blog post";
 
       // Title + meta description
       document.title = `${title} | Seattle Digital Studio`;
@@ -104,7 +104,7 @@ const BlogPost: React.FC = () => {
       ensureMeta({ name: "twitter:description" }).setAttribute("content", description);
       ensureMeta({ name: "twitter:image" }).setAttribute("content", absoluteImageUrl);
 
-      // JSON-LD
+      // JSON-LD (optional but nice for SEO)
       const ldSelector = 'script[type="application/ld+json"]#post-jsonld';
       let ld = document.querySelector(ldSelector) as HTMLScriptElement | null;
       if (!ld) {
@@ -137,7 +137,7 @@ const BlogPost: React.FC = () => {
         0
       );
 
-      // Let Prerender know the page is fully ready
+      // Tell Prerender.io page is ready
       (window as any).prerenderReady = true;
 
       // Related posts
@@ -218,7 +218,10 @@ const BlogPost: React.FC = () => {
       <section className="py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {content ? (
-            <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+            <article
+              className="prose prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           ) : (
             <article className="prose prose-lg max-w-none">
               <p>{post.excerpt || post.seo?.metaDescription || ""}</p>
@@ -233,9 +236,13 @@ const BlogPost: React.FC = () => {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {post.categories.map((catId) => {
-                  const cat = blogCategories.find((c) => c.id === catId);
+                  // blogCategories is a Record<string, { id; name; color; ... }>
+                  const cat = (blogCategories as any)[catId];
                   return (
-                    <span key={catId} className="inline-flex items-center gap-2 bg-pacific/10 text-pacific px-3 py-1 rounded-full">
+                    <span
+                      key={catId}
+                      className="inline-flex items-center gap-2 bg-pacific/10 text-pacific px-3 py-1 rounded-full"
+                    >
                       <Tag className="w-3.5 h-3.5" />
                       {cat?.name || catId}
                     </span>
@@ -248,7 +255,9 @@ const BlogPost: React.FC = () => {
           {/* Share */}
           <div className="mt-10">
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_ORIGIN}/blog/${post.slug}`)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                `${SITE_ORIGIN}/blog/${post.slug}`
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-pacific hover:text-pacific-dark"
@@ -299,6 +308,4 @@ const BlogPost: React.FC = () => {
       </section>
     </div>
   );
-};
-
-export default BlogPost;
+}
