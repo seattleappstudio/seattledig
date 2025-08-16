@@ -1,123 +1,162 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, User, Tag, Share2, ArrowRight } from 'lucide-react';
-import { getPostBySlug, getRelatedPosts, formatDate, parseMarkdown, getCategoryColor, blogCategories, loadMarkdownContent } from '../utils/blogUtils';
-import { BlogPost as BlogPostType } from '../types/blog';
+// src/pages/BlogPost.tsx
+import React, { useEffect, useState } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import { ArrowLeft, Calendar, Clock, User, Tag, Share2, ArrowRight } from "lucide-react";
+import { getPostBySlug, getRelatedPosts, formatDate, blogCategories, loadMarkdownContent } from "../utils/blogUtils";
+import { BlogPost as BlogPostType } from "../types/blog";
+
+function ensureMeta(propertyOrName: { property?: string; name?: string }) {
+  const selector = propertyOrName.property
+    ? `meta[property="${propertyOrName.property}"]`
+    : `meta[name="${propertyOrName.name}"]`;
+  let el = document.querySelector(selector) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement("meta");
+    if (propertyOrName.property) el.setAttribute("property", propertyOrName.property);
+    if (propertyOrName.name) el.setAttribute("name", propertyOrName.name);
+    document.head.appendChild(el);
+  }
+  return el!;
+}
+
+function setLink(rel: string, href: string) {
+  let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", rel);
+    document.head.appendChild(link);
+  }
+  link.setAttribute("href", href);
+  return link!;
+}
+
+const SITE_ORIGIN = "https://seattledigitalstudio.com";
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadPost = async () => {
-      if (slug) {
-        const foundPost = getPostBySlug(slug);
-        if (foundPost) {
-          setPost(foundPost);
-          setRelatedPosts(getRelatedPosts(foundPost));
-          
-          // Load content from markdown file or use inline content
-          let postContent = '';
-          if (foundPost.contentFile) {
-            postContent = await loadMarkdownContent(foundPost.contentFile);
-          } else if (foundPost.content) {
-            postContent = foundPost.content;
-          }
-          setContent(postContent);
-          
-          // Update document title and meta description
-          document.title = `${foundPost.title} | Seattle Digital Studio`;
-          const metaDescription = document.querySelector('meta[name="description"]');
-          if (metaDescription) {
-            metaDescription.setAttribute('content', foundPost.seo.metaDescription);
-          }
-          
-          // Add/update keywords meta tag
-          let keywordsMeta = document.querySelector('meta[name="keywords"]');
-          if (!keywordsMeta) {
-            keywordsMeta = document.createElement('meta');
-            keywordsMeta.setAttribute('name', 'keywords');
-            document.head.appendChild(keywordsMeta);
-          }
-          keywordsMeta.setAttribute('content', foundPost.seo.keywords.join(', '));
-          
-          // Add Open Graph tags
-          let ogTitle = document.querySelector('meta[property="og:title"]');
-          if (!ogTitle) {
-            ogTitle = document.createElement('meta');
-            ogTitle.setAttribute('property', 'og:title');
-            document.head.appendChild(ogTitle);
-          }
-          ogTitle.setAttribute('content', foundPost.title);
-          
-          let ogDescription = document.querySelector('meta[property="og:description"]');
-          if (!ogDescription) {
-            ogDescription = document.createElement('meta');
-            ogDescription.setAttribute('property', 'og:description');
-            document.head.appendChild(ogDescription);
-          }
-          ogDescription.setAttribute('content', foundPost.excerpt);
-          
-          let ogImage = document.querySelector('meta[property="og:image"]');
-          if (!ogImage) {
-            ogImage = document.createElement('meta');
-            ogImage.setAttribute('property', 'og:image');
-            document.head.appendChild(ogImage);
-          }
-          ogImage.setAttribute('content', foundPost.image);
-          
-          let ogType = document.querySelector('meta[property="og:type"]');
-          if (!ogType) {
-            ogType = document.createElement('meta');
-            ogType.setAttribute('property', 'og:type');
-            document.head.appendChild(ogType);
-          }
-          ogType.setAttribute('content', 'article');
-        }
+      if (!slug) {
         setLoading(false);
+        return;
       }
+
+      const foundPost = getPostBySlug(slug) || null;
+      setPost(foundPost);
+
+      if (!foundPost) {
+        setLoading(false);
+        return;
+      }
+
+      // Load markdown if present (your blogUtils has loadMarkdownContent)
+      if (foundPost.contentFile && foundPost.contentFile.endsWith(".md")) {
+        const postContent = await loadMarkdownContent(foundPost.contentFile);
+        setContent(postContent);
+      } else {
+        setContent(foundPost.contentHtml || "");
+      }
+
+      // ---------- SEO / Social meta (absolute URLs) ----------
+      const absolutePostUrl = `${SITE_ORIGIN}/blog/${foundPost.slug}`;
+
+      const imageIsAbsolute =
+        typeof foundPost.image === "string" && /^(https?:)?\/\//i.test(foundPost.image);
+      const absoluteImageUrl = foundPost.image
+        ? imageIsAbsolute
+          ? foundPost.image
+          : `${SITE_ORIGIN}${foundPost.image.startsWith("/") ? "" : "/"}${foundPost.image}`
+        : `${SITE_ORIGIN}/images/social-default.jpg`; // ensure this exists or change
+
+      const title = foundPost.title || "Seattle Digital Studio";
+      const description = foundPost.seo?.metaDescription || foundPost.excerpt || "Seattle Digital Studio blog post";
+
+      // Title + meta description
+      document.title = `${title} | Seattle Digital Studio`;
+      const metaDesc = ensureMeta({ name: "description" });
+      metaDesc.setAttribute("content", description);
+
+      // Canonical
+      setLink("canonical", absolutePostUrl);
+
+      // Open Graph
+      ensureMeta({ property: "og:type" }).setAttribute("content", "article");
+      ensureMeta({ property: "og:title" }).setAttribute("content", title);
+      ensureMeta({ property: "og:description" }).setAttribute("content", description);
+      ensureMeta({ property: "og:url" }).setAttribute("content", absolutePostUrl);
+      ensureMeta({ property: "og:image" }).setAttribute("content", absoluteImageUrl);
+
+      if (foundPost.publishDate) {
+        ensureMeta({ property: "article:published_time" }).setAttribute(
+          "content",
+          new Date(foundPost.publishDate).toISOString()
+        );
+      }
+
+      // Twitter
+      ensureMeta({ name: "twitter:card" }).setAttribute("content", "summary_large_image");
+      ensureMeta({ name: "twitter:title" }).setAttribute("content", title);
+      ensureMeta({ name: "twitter:description" }).setAttribute("content", description);
+      ensureMeta({ name: "twitter:image" }).setAttribute("content", absoluteImageUrl);
+
+      // JSON-LD
+      const ldSelector = 'script[type="application/ld+json"]#post-jsonld';
+      let ld = document.querySelector(ldSelector) as HTMLScriptElement | null;
+      if (!ld) {
+        ld = document.createElement("script");
+        ld.type = "application/ld+json";
+        ld.id = "post-jsonld";
+        document.head.appendChild(ld);
+      }
+      ld.textContent = JSON.stringify(
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: title,
+          description,
+          image: absoluteImageUrl,
+          datePublished: foundPost.publishDate ? new Date(foundPost.publishDate).toISOString() : undefined,
+          mainEntityOfPage: absolutePostUrl,
+          author: foundPost.author ? { "@type": "Person", name: foundPost.author } : undefined,
+          publisher: {
+            "@type": "Organization",
+            name: "Seattle Digital Studio",
+            logo: {
+              "@type": "ImageObject",
+              url: `${SITE_ORIGIN}/images/logo-1200x630.png`,
+            },
+          },
+          url: absolutePostUrl,
+        },
+        null,
+        0
+      );
+
+      // Let Prerender know the page is fully ready
+      (window as any).prerenderReady = true;
+
+      // Related posts
+      const related = getRelatedPosts(foundPost);
+      setRelatedPosts(related);
+
+      setLoading(false);
     };
 
     loadPost();
   }, [slug]);
 
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-pacific"></div>
-      </div>
-    );
+    return <div className="max-w-4xl mx-auto px-4 py-16">Loading…</div>;
   }
 
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: post.title,
-          text: post.excerpt,
-          url: window.location.href,
-        });
-      } catch (error) {
-        // Fallback to copying URL
-        navigator.clipboard.writeText(window.location.href);
-      }
-    } else {
-      // Fallback to copying URL
-      navigator.clipboard.writeText(window.location.href);
-    }
-  };
 
   return (
     <div className="animate-fade-in">
@@ -130,203 +169,132 @@ const BlogPost: React.FC = () => {
               to="/blog"
               className="inline-flex items-center text-pacific hover:text-pacific-dark transition-colors duration-200 mb-8 group"
             >
-              <ArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" size={20} />
+              <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-0.5" />
               Back to Blog
             </Link>
 
-            {/* Categories */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map((categoryId) => (
-                <Link
-                  key={categoryId}
-                  to={`/blog?category=${categoryId}`}
-                  className="px-3 py-1 text-sm font-medium rounded-full text-white hover:opacity-80 transition-opacity"
-                  style={{ backgroundColor: getCategoryColor(categoryId) }}
-                >
-                  {blogCategories[categoryId]?.name || categoryId}
-                </Link>
-              ))}
-            </div>
-
-            {/* Title */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal mb-6 leading-tight">
+            {/* Title & Meta */}
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-4">
               {post.title}
             </h1>
 
-            {/* Excerpt */}
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {post.excerpt}
-            </p>
-
-            {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-600">
-              <div className="flex items-center">
-                <User size={18} className="mr-2" />
-                <span>{post.author}</span>
-              </div>
-              <div className="flex items-center">
-                <Calendar size={18} className="mr-2" />
-                <span>{formatDate(post.publishDate)}</span>
-              </div>
-              <div className="flex items-center">
-                <Clock size={18} className="mr-2" />
-                <span>{post.readingTime} min read</span>
-              </div>
-              <button
-                onClick={handleShare}
-                className="flex items-center hover:text-pacific transition-colors"
-              >
-                <Share2 size={18} className="mr-2" />
-                <span>Share</span>
-              </button>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-gray-600">
+              {post.publishDate && (
+                <span className="inline-flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-pacific" />
+                  {formatDate(post.publishDate)}
+                </span>
+              )}
+              {post.readTime && (
+                <span className="inline-flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-pacific" />
+                  {post.readTime} min read
+                </span>
+              )}
+              {post.author && (
+                <span className="inline-flex items-center gap-2">
+                  <User className="w-4 h-4 text-pacific" />
+                  {post.author}
+                </span>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Image */}
-      <section className="py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl overflow-hidden shadow-xl animate-scale-in">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full h-64 sm:h-80 lg:h-96 object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Article Content */}
-      <article className="py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div 
-            className="prose prose-lg max-w-none animate-slide-up"
-            dangerouslySetInnerHTML={{ __html: parseMarkdown(content) }}
-            style={{
-              '--tw-prose-body': '#374151',
-              '--tw-prose-headings': '#111827',
-              '--tw-prose-links': '#1CA9C9',
-              '--tw-prose-bold': '#111827',
-              '--tw-prose-counters': '#6B7280',
-              '--tw-prose-bullets': '#D1D5DB',
-              '--tw-prose-hr': '#E5E7EB',
-              '--tw-prose-quotes': '#111827',
-              '--tw-prose-quote-borders': '#E5E7EB',
-              '--tw-prose-captions': '#6B7280',
-              '--tw-prose-code': '#111827',
-              '--tw-prose-pre-code': '#E5E7EB',
-              '--tw-prose-pre-bg': '#1F2937',
-              '--tw-prose-th-borders': '#D1D5DB',
-              '--tw-prose-td-borders': '#E5E7EB',
-            } as React.CSSProperties}
+      {/* Hero Image */}
+      {post.image && (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-auto rounded-xl shadow-md"
+            loading="eager"
           />
         </div>
-      </article>
-
-      {/* Tags */}
-      {post.tags.length > 0 && (
-        <section className="py-8 border-t border-gray-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center flex-wrap gap-2">
-              <Tag size={18} className="text-gray-500 mr-2" />
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
       )}
 
-      {/* Related Posts */}
-      {relatedPosts.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-charcoal mb-8">Related Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedPosts.map((relatedPost, index) => (
-                <article
-                  key={relatedPost.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-scale-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={relatedPost.image}
-                      alt={relatedPost.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {relatedPost.categories.slice(0, 2).map((categoryId) => (
-                        <span
-                          key={categoryId}
-                          className="px-2 py-1 text-xs font-medium rounded-full text-white"
-                          style={{ backgroundColor: getCategoryColor(categoryId) }}
-                        >
-                          {blogCategories[categoryId]?.name || categoryId}
+      {/* Content */}
+      <section className="py-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {content ? (
+            <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+          ) : (
+            <article className="prose prose-lg max-w-none">
+              <p>{post.excerpt || post.seo?.metaDescription || ""}</p>
+            </article>
+          )}
+
+          {/* Tags / Categories */}
+          {post.categories?.length ? (
+            <div className="mt-10">
+              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">
+                Categories
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {post.categories.map((catId) => {
+                  const cat = blogCategories.find((c) => c.id === catId);
+                  return (
+                    <span key={catId} className="inline-flex items-center gap-2 bg-pacific/10 text-pacific px-3 py-1 rounded-full">
+                      <Tag className="w-3.5 h-3.5" />
+                      {cat?.name || catId}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
+          {/* Share */}
+          <div className="mt-10">
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_ORIGIN}/blog/${post.slug}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-pacific hover:text-pacific-dark"
+            >
+              <Share2 className="w-4 h-4" />
+              Share on LinkedIn
+            </a>
+          </div>
+
+          {/* Related Posts */}
+          {relatedPosts.length ? (
+            <div className="mt-16">
+              <h3 className="text-xl font-semibold mb-6">Related Posts</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {relatedPosts.map((rp) => (
+                  <Link
+                    to={`/blog/${rp.slug}`}
+                    key={rp.slug}
+                    className="group block p-5 border border-gray-200 rounded-xl hover:border-pacific/40 hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 group-hover:text-pacific transition-colors">
+                          {rp.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                          {rp.excerpt || rp.seo?.metaDescription || ""}
+                        </p>
+                        <span className="inline-flex items-center gap-2 text-pacific mt-3 text-sm">
+                          Read more
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                         </span>
-                      ))}
+                      </div>
+                      {rp.image ? (
+                        <img
+                          src={rp.image}
+                          alt={rp.title}
+                          className="w-24 h-16 object-cover rounded-md border"
+                        />
+                      ) : null}
                     </div>
-                    <h3 className="text-lg font-bold text-charcoal mb-3 line-clamp-2">
-                      <Link
-                        to={`/blog/${relatedPost.slug}`}
-                        className="hover:text-pacific transition-colors"
-                      >
-                        {relatedPost.title}
-                      </Link>
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{relatedPost.excerpt}</p>
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                      <span>{formatDate(relatedPost.publishDate)}</span>
-                      <span>{relatedPost.readingTime} min read</span>
-                    </div>
-                    <Link
-                      to={`/blog/${relatedPost.slug}`}
-                      className="inline-flex items-center text-pacific hover:text-pacific-dark transition-colors text-sm font-medium group"
-                    >
-                      Read More
-                      <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" size={14} />
-                    </Link>
-                  </div>
-                </article>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* CTA Section */}
-      <section className="py-16 bg-charcoal">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="animate-slide-up">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Let's discuss how our digital solutions can help accelerate your growth and streamline your operations.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="px-8 py-4 bg-gradient-to-r from-pacific to-pacific-dark text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                Get Started Today
-              </Link>
-              <Link
-                to="/blog"
-                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-charcoal transition-all duration-300"
-              >
-                Read More Articles
-              </Link>
-            </div>
-          </div>
+          ) : null}
         </div>
       </section>
     </div>

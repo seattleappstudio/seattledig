@@ -51,7 +51,67 @@ const Home: React.FC = () => {
       document.head.appendChild(ogType);
     }
     ogType.setAttribute('content', 'website');
-  }, []);
+  
+    // --- SDS: Absolute URLs for OG/Twitter + canonical + prerender ---
+    const absoluteUrl = "https://seattledigitalstudio.com/";
+    const absoluteImageUrl = "https://seattledigitalstudio.com/images/social-home.jpg"; // ensure this exists (1200x630)
+
+    // og:url
+    (function() {
+      let el = document.querySelector('meta[property="og:url"]');
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('property', 'og:url');
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', absoluteUrl);
+    })();
+
+    // og:image (absolute)
+    (function() {
+      let el = document.querySelector('meta[property="og:image"]');
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('property', 'og:image');
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', absoluteImageUrl);
+    })();
+
+    // canonical
+    (function() {
+      let link = document.querySelector('link[rel="canonical"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', absoluteUrl);
+    })();
+
+    // Twitter card + image
+    ;(function() {
+      let card = document.querySelector('meta[name="twitter:card"]');
+      if (!card) {
+        card = document.createElement('meta');
+        card.setAttribute('name', 'twitter:card');
+        document.head.appendChild(card);
+      }
+      card.setAttribute('content', 'summary_large_image');
+
+      let timg = document.querySelector('meta[name="twitter:image"]');
+      if (!timg) {
+        timg = document.createElement('meta');
+        timg.setAttribute('name', 'twitter:image');
+        document.head.appendChild(timg);
+      }
+      timg.setAttribute('content', absoluteImageUrl);
+    })();
+
+    // Signal Prerender.io
+    (window as any).prerenderReady = true;
+    // --- /SDS additions ---
+}, []);
 
   const services = [
     {
