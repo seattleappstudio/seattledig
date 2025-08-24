@@ -1,12 +1,10 @@
-// Flexible resolver for images living under /public/images (no moves needed).
-// Accepts:
-//  - "blog/advertising-team"         (no extension)
-//  - "blog/advertising-team.jpg"     (has extension)
-//  - "images/blog/hero.png"          (full path under /public)
-//  - "/images/hero.webp"             (rooted path)
-//  - "https://cdn.example.com/x.jpg" (absolute URL)
+// src/utils/resolveImage.ts
+// Flexible resolvers for images under /public/images (no moves/renames required).
 
-const EXTS = ["webp", "jpg", "jpeg", "png"];
+// For on-page <img>, WEBP first is fine (modern browsers)
+// For OG/Twitter, prefer JPG/PNG because LinkedIn often skips WEBP
+const EXTS_PAGE = ["webp", "jpg", "jpeg", "png"];
+const EXTS_OG   = ["jpg", "jpeg", "png", "webp"];
 
 function normalize(p: string) {
   if (!p) return "";
@@ -14,27 +12,41 @@ function normalize(p: string) {
   return p.startsWith("/") ? p : "/" + p;
 }
 
-/** Resolve a path for an asset in /public/images by default. */
+function hasExtension(s: string) {
+  return /\.[a-z0-9]+$/i.test(s);
+}
+
+/** Default resolver for on-page images (<img src=...>) */
 export function resolvePublicImage(input: string, baseDir = "/images/"): string {
   if (!input) return "/images/fallback-social.jpg";
-
-  // Absolute URL
   if (/^https?:\/\//i.test(input)) return input;
 
-  const hasExt = /\.[a-z0-9]+$/i.test(input);
-
-  // Already points into /images → keep as-is
   if (input.startsWith("images/") || input.startsWith("/images/")) {
     return normalize(input);
   }
-
-  // Subpath like "blog/foo.jpg" → prefix with /images/
-  if (hasExt) {
+  if (hasExtension(input)) {
     return normalize(baseDir + input.replace(/^\/+/, ""));
   }
 
-  // No extension provided → prefer .webp; onError will fall back to a site-wide default
   const name = input.replace(/^\/+/, "");
-  return normalize(`${baseDir}${name}.${EXTS[0]}`);
+  // WEBP first for page rendering; <img onError> can still swap to fallback
+  return normalize(`${baseDir}${name}.${EXTS_PAGE[0]}`);
+}
+
+/** Safer path builder for OG/Twitter tags (prefer JPG/PNG over WEBP) */
+export function resolveOgImagePath(input: string, baseDir = "/images/"): string {
+  if (!input) return "/images/fallback-social.jpg";
+  if (/^https?:\/\//i.test(input)) return input;
+
+  if (input.startsWith("images/") || input.startsWith("/images/")) {
+    return normalize(input);
+  }
+  if (hasExtension(input)) {
+    return normalize(baseDir + input.replace(/^\/+/, ""));
+  }
+
+  const name = input.replace(/^\/+/, "");
+  // Prefer JPG/PNG to maximize compatibility with LinkedIn
+  return normalize(`${baseDir}${name}.${EXTS_OG[0]}`); // .jpg
 }
 

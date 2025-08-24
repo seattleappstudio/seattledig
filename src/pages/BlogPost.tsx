@@ -2,17 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, User, Tag, Share2, ArrowRight } from "lucide-react";
-import {
-  getPostBySlug,
-  getRelatedPosts,
-  formatDate,
-  blogCategories,
-  loadMarkdownContent,
-} from "../utils/blogUtils";
+import { getPostBySlug, getRelatedPosts, formatDate, blogCategories, loadMarkdownContent } from "../utils/blogUtils";
 import { BlogPost as BlogPostType } from "../types/blog";
-import { resolvePublicImage } from "../utils/resolveImage";
+import { resolvePublicImage, resolveOgImagePath } from "../utils/resolveImage"; // NOTE: added resolveOgImagePath
 
-// ----- Head helpers: upsert meta & link so we don't create duplicates -----
 function ensureMeta(propertyOrName: { property?: string; name?: string }) {
   const selector = propertyOrName.property
     ? `meta[property="${propertyOrName.property}"]`
@@ -73,15 +66,15 @@ export default function BlogPost() {
       // ---------- SEO / Social meta (absolute URLs) ----------
       const absolutePostUrl = `${SITE_ORIGIN}/blog/${foundPost.slug}`;
 
-      // Build a resilient public image path (supports .png/.jpg/.jpeg/.webp and subfolders)
-      const resolvedPath = resolvePublicImage(foundPost.image); // e.g., "/images/blog/foo.jpg"
-      const absoluteImageUrl = `${SITE_ORIGIN}${resolvedPath}`;
+      // For OG/Twitter, prefer JPG/PNG to satisfy LinkedIn
+      const ogPath = resolveOgImagePath(foundPost.image); // e.g., "/images/blog/foo.jpg"
+      const absoluteImageUrl = `${SITE_ORIGIN}${ogPath}`;
 
       const title = foundPost.title || "Seattle Digital Studio";
       const description =
         foundPost.seo?.metaDescription || foundPost.excerpt || "Seattle Digital Studio blog post";
 
-      // <title> and meta description
+      // Title + meta description
       document.title = `${title} — Seattle Digital Studio`;
       const metaDesc = ensureMeta({ name: "description" });
       metaDesc.setAttribute("content", description);
@@ -96,6 +89,7 @@ export default function BlogPost() {
       ensureMeta({ property: "og:title" }).setAttribute("content", title);
       ensureMeta({ property: "og:description" }).setAttribute("content", description);
       ensureMeta({ property: "og:image" }).setAttribute("content", absoluteImageUrl);
+      ensureMeta({ property: "og:image:secure_url" }).setAttribute("content", absoluteImageUrl);
       ensureMeta({ property: "og:image:width" }).setAttribute("content", "1200");
       ensureMeta({ property: "og:image:height" }).setAttribute("content", "630");
 
@@ -106,7 +100,7 @@ export default function BlogPost() {
         );
       }
 
-      // Twitter Card
+      // Twitter
       ensureMeta({ name: "twitter:card" }).setAttribute("content", "summary_large_image");
       ensureMeta({ name: "twitter:title" }).setAttribute("content", title);
       ensureMeta({ name: "twitter:description" }).setAttribute("content", description);
@@ -128,9 +122,7 @@ export default function BlogPost() {
           headline: title,
           description,
           image: absoluteImageUrl,
-          datePublished: foundPost.publishDate
-            ? new Date(foundPost.publishDate).toISOString()
-            : undefined,
+          datePublished: foundPost.publishDate ? new Date(foundPost.publishDate).toISOString() : undefined,
           mainEntityOfPage: absolutePostUrl,
           author: foundPost.author ? { "@type": "Person", name: foundPost.author } : undefined,
           publisher: {
@@ -147,11 +139,12 @@ export default function BlogPost() {
         0
       );
 
-      // Signal to Prerender service that the page is ready for snapshot
+      // Tell Prerender service the page is ready
       (window as any).prerenderReady = true;
 
       // Related posts
-      setRelatedPosts(getRelatedPosts(foundPost));
+      const related = getRelatedPosts(foundPost);
+      setRelatedPosts(related);
 
       setLoading(false);
     };
@@ -309,8 +302,7 @@ export default function BlogPost() {
                           className="w-24 h-16 object-cover rounded-md border"
                           loading="lazy"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src =
-                              "/images/fallback-social.jpg";
+                            (e.currentTarget as HTMLImageElement).src = "/images/fallback-social.jpg";
                           }}
                         />
                       ) : null}
@@ -325,4 +317,5 @@ export default function BlogPost() {
     </div>
   );
 }
+
 
