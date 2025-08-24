@@ -1,5 +1,5 @@
 // netlify/edge-functions/prerender.ts
-// Deno/Edge runtime (TypeScript)
+
 const BOT_PATTERNS = [
   /googlebot/i,
   /bingbot/i,
@@ -25,37 +25,44 @@ function isBot(ua: string) {
   return BOT_PATTERNS.some((r) => r.test(ua));
 }
 
+// Any request for a file with an extension should NOT be prerendered
+const STATIC_EXT = /\.(?:png|jpe?g|webp|gif|svg|ico|css|js|mjs|map|txt|xml|pdf|json|woff2?|ttf|eot|mp4|webm|ogv|mp3|ogg|wav)$/i;
+
 export default async (req: Request, context: any) => {
+  const url = new URL(req.url);
+  const ua = req.headers.get("user-agent") || "";
+  const accept = req.headers.get("accept") || "";
+
+  // Always pass through non-GET/HEAD, static assets, and non-HTML requests
+  const isGetOrHead = req.method === "GET" || req.method === "HEAD";
+  const looksStatic = STATIC_EXT.test(url.pathname);
+  const wantsHtml = /\btext\/html\b/i.test(accept);
+
+  if (!isGetOrHead || looksStatic || !isBot(ua) || !wantsHtml) {
+    return context.next();
+  }
+
+  // --- From here down, prerender ONLY for HTML page requests from bots ---
+
   try {
-    const ua = req.headers.get("user-agent") || "";
-    const isGetOrHead = req.method === "GET" || req.method === "HEAD";
-
-    // Only prerender for GET/HEAD from known bots
-    if (!isGetOrHead || !isBot(ua)) return context.next();
-
-    // Build prerender URL
-    const originalUrl = new URL(req.url);
-    const prerenderEndpoint = "https://service.prerender.io/"; // or your own prerender service
-    const targetUrl = new URL(originalUrl.pathname + originalUrl.search, originalUrl.origin).toString();
+    const prerenderEndpoint = "https://service.prerender.io/";
+    const targetUrl = url.origin + url.pathname + url.search;
     const fetchUrl = prerenderEndpoint + targetUrl;
 
     const token = (globalThis as any).Deno?.env?.get("PRERENDER_TOKEN") || "";
+
     const headers: Record<string, string> = {
       "User-Agent": ua,
-      "X-Forwarded-Proto": originalUrl.protocol.replace(":", ""),
-      "X-Forwarded-Host": originalUrl.host,
+      "X-Forwarded-Proto": url.protocol.replace(":", ""),
+      "X-Forwarded-Host": url.host,
       "X-Original-Url": targetUrl,
       "Accept": "text/html,application/xhtml+xml,application/xml",
-      "Cache-Control": "no-cache"
+      "Cache-Control": "no-cache",
     };
     if (token) headers["X-Prerender-Token"] = token;
 
-    const prerenderRes = await fetch(fetchUrl, {
-      method: "GET",
-      headers,
-    });
+    const prerenderRes = await fetch(fetchUrl, { method: "GET", headers });
 
-    // If prerender works, return it
     if (prerenderRes.ok) {
       const html = await prerenderRes.text();
       return new Response(html, {
@@ -63,13 +70,11 @@ export default async (req: Request, context: any) => {
         headers: {
           "content-type": "text/html; charset=utf-8",
           "x-prerender-debug": "hit",
-          // Let platforms cache for a bit; tune to your liking
-          "cache-control": "public, max-age=600"
+          "cache-control": "public, max-age=600",
         },
       });
     }
 
-    // Fallback to normal app if prerender misses
     const downstream = await context.next();
     return new Response(await downstream.text(), {
       status: downstream.status,
@@ -78,7 +83,7 @@ export default async (req: Request, context: any) => {
         "x-prerender-debug": "miss",
       },
     });
-  } catch (err) {
+  } catch {
     const downstream = await context.next();
     return new Response(await downstream.text(), {
       status: downstream.status,
@@ -89,3 +94,4 @@ export default async (req: Request, context: any) => {
     });
   }
 };
+
