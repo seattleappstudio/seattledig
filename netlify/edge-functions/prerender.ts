@@ -1,48 +1,32 @@
 // netlify/edge-functions/prerender.ts
 
 const BOT_PATTERNS = [
-  /googlebot/i,
-  /bingbot/i,
-  /yandex/i,
-  /duckduckbot/i,
-  /baiduspider/i,
+  /googlebot/i, /bingbot/i, /yandex/i, /duckduckbot/i, /baiduspider/i,
   /facebookexternalhit/i, // Facebook
   /linkedinbot/i,         // LinkedIn
-  /twitterbot/i,
-  /slackbot/i,
-  /discordbot/i,
-  /whatsapp/i,
-  /telegrambot/i,
-  /pinterestbot/i,
-  /skypeuripreview/i,
-  /embedly/i,
-  /quora link preview/i,
-  /vkShare/i,
-  /redditbot/i
+  /twitterbot/i, /slackbot/i, /discordbot/i,
+  /whatsapp/i, /telegrambot/i, /pinterestbot/i,
+  /skypeuripreview/i, /embedly/i, /quora link preview/i,
+  /vkShare/i, /redditbot/i
 ];
 
 function isBot(ua: string) {
   return BOT_PATTERNS.some((r) => r.test(ua));
 }
 
-// Any request for a file with an extension should NOT be prerendered
+// Skip prerender for static assets
 const STATIC_EXT = /\.(?:png|jpe?g|webp|gif|svg|ico|css|js|mjs|map|txt|xml|pdf|json|woff2?|ttf|eot|mp4|webm|ogv|mp3|ogg|wav)$/i;
 
 export default async (req: Request, context: any) => {
   const url = new URL(req.url);
   const ua = req.headers.get("user-agent") || "";
-  const accept = req.headers.get("accept") || "";
-
-  // Always pass through non-GET/HEAD, static assets, and non-HTML requests
   const isGetOrHead = req.method === "GET" || req.method === "HEAD";
   const looksStatic = STATIC_EXT.test(url.pathname);
-  const wantsHtml = /\btext\/html\b/i.test(accept);
 
-  if (!isGetOrHead || looksStatic || !isBot(ua) || !wantsHtml) {
+  // Always bypass prerender for non-GET/HEAD or static assets or non-bots
+  if (!isGetOrHead || looksStatic || !isBot(ua)) {
     return context.next();
   }
-
-  // --- From here down, prerender ONLY for HTML page requests from bots ---
 
   try {
     const prerenderEndpoint = "https://service.prerender.io/";
@@ -94,4 +78,5 @@ export default async (req: Request, context: any) => {
     });
   }
 };
+
 

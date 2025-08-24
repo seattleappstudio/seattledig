@@ -2,10 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, User, Tag, Share2, ArrowRight } from "lucide-react";
-import { getPostBySlug, getRelatedPosts, formatDate, blogCategories, loadMarkdownContent } from "../utils/blogUtils";
+import {
+  getPostBySlug,
+  getRelatedPosts,
+  formatDate,
+  blogCategories,
+  loadMarkdownContent,
+} from "../utils/blogUtils";
 import { BlogPost as BlogPostType } from "../types/blog";
 import { resolvePublicImage } from "../utils/resolveImage";
 
+// ----- Head helpers: upsert meta & link so we don't create duplicates -----
 function ensureMeta(propertyOrName: { property?: string; name?: string }) {
   const selector = propertyOrName.property
     ? `meta[property="${propertyOrName.property}"]`
@@ -66,7 +73,7 @@ export default function BlogPost() {
       // ---------- SEO / Social meta (absolute URLs) ----------
       const absolutePostUrl = `${SITE_ORIGIN}/blog/${foundPost.slug}`;
 
-      // Always route through resolver so .jpg/.png/.webp and subpaths all work
+      // Build a resilient public image path (supports .png/.jpg/.jpeg/.webp and subfolders)
       const resolvedPath = resolvePublicImage(foundPost.image); // e.g., "/images/blog/foo.jpg"
       const absoluteImageUrl = `${SITE_ORIGIN}${resolvedPath}`;
 
@@ -74,20 +81,23 @@ export default function BlogPost() {
       const description =
         foundPost.seo?.metaDescription || foundPost.excerpt || "Seattle Digital Studio blog post";
 
-      // Title + meta description
-      document.title = `${title} | Seattle Digital Studio`;
+      // <title> and meta description
+      document.title = `${title} — Seattle Digital Studio`;
       const metaDesc = ensureMeta({ name: "description" });
       metaDesc.setAttribute("content", description);
 
       // Canonical
       setLink("canonical", absolutePostUrl);
 
-      // Open Graph
+      // Open Graph (replace defaults, don't duplicate)
       ensureMeta({ property: "og:type" }).setAttribute("content", "article");
+      ensureMeta({ property: "og:site_name" }).setAttribute("content", "Seattle Digital Studio");
+      ensureMeta({ property: "og:url" }).setAttribute("content", absolutePostUrl);
       ensureMeta({ property: "og:title" }).setAttribute("content", title);
       ensureMeta({ property: "og:description" }).setAttribute("content", description);
-      ensureMeta({ property: "og:url" }).setAttribute("content", absolutePostUrl);
       ensureMeta({ property: "og:image" }).setAttribute("content", absoluteImageUrl);
+      ensureMeta({ property: "og:image:width" }).setAttribute("content", "1200");
+      ensureMeta({ property: "og:image:height" }).setAttribute("content", "630");
 
       if (foundPost.publishDate) {
         ensureMeta({ property: "article:published_time" }).setAttribute(
@@ -96,13 +106,13 @@ export default function BlogPost() {
         );
       }
 
-      // Twitter
+      // Twitter Card
       ensureMeta({ name: "twitter:card" }).setAttribute("content", "summary_large_image");
       ensureMeta({ name: "twitter:title" }).setAttribute("content", title);
       ensureMeta({ name: "twitter:description" }).setAttribute("content", description);
       ensureMeta({ name: "twitter:image" }).setAttribute("content", absoluteImageUrl);
 
-      // JSON-LD (optional but nice for SEO)
+      // JSON-LD (nice for SEO; aligns with OG image)
       const ldSelector = 'script[type="application/ld+json"]#post-jsonld';
       let ld = document.querySelector(ldSelector) as HTMLScriptElement | null;
       if (!ld) {
@@ -118,7 +128,9 @@ export default function BlogPost() {
           headline: title,
           description,
           image: absoluteImageUrl,
-          datePublished: foundPost.publishDate ? new Date(foundPost.publishDate).toISOString() : undefined,
+          datePublished: foundPost.publishDate
+            ? new Date(foundPost.publishDate).toISOString()
+            : undefined,
           mainEntityOfPage: absolutePostUrl,
           author: foundPost.author ? { "@type": "Person", name: foundPost.author } : undefined,
           publisher: {
@@ -135,12 +147,11 @@ export default function BlogPost() {
         0
       );
 
-      // Tell Prerender.io page is ready
+      // Signal to Prerender service that the page is ready for snapshot
       (window as any).prerenderReady = true;
 
       // Related posts
-      const related = getRelatedPosts(foundPost);
-      setRelatedPosts(related);
+      setRelatedPosts(getRelatedPosts(foundPost));
 
       setLoading(false);
     };
@@ -237,7 +248,6 @@ export default function BlogPost() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {post.categories.map((catId) => {
-                  // blogCategories is a Record<string, { id; name; color; ... }>
                   const cat = (blogCategories as any)[catId];
                   return (
                     <span
@@ -294,9 +304,14 @@ export default function BlogPost() {
                       </div>
                       {rp.image ? (
                         <img
-                          src={rp.image}
+                          src={resolvePublicImage(rp.image)}
                           alt={rp.title}
                           className="w-24 h-16 object-cover rounded-md border"
+                          loading="lazy"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src =
+                              "/images/fallback-social.jpg";
+                          }}
                         />
                       ) : null}
                     </div>
@@ -310,3 +325,4 @@ export default function BlogPost() {
     </div>
   );
 }
+
