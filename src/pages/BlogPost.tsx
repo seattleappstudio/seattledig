@@ -4,6 +4,7 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, User, Tag, Share2, ArrowRight } from "lucide-react";
 import { getPostBySlug, getRelatedPosts, formatDate, blogCategories, loadMarkdownContent } from "../utils/blogUtils";
 import { BlogPost as BlogPostType } from "../types/blog";
+import { resolvePublicImage } from "../utils/resolveImage";
 
 function ensureMeta(propertyOrName: { property?: string; name?: string }) {
   const selector = propertyOrName.property
@@ -64,13 +65,10 @@ export default function BlogPost() {
 
       // ---------- SEO / Social meta (absolute URLs) ----------
       const absolutePostUrl = `${SITE_ORIGIN}/blog/${foundPost.slug}`;
-      const imageIsAbsolute =
-        typeof foundPost.image === "string" && /^(https?:)?\/\//i.test(foundPost.image);
-      const absoluteImageUrl = foundPost.image
-        ? imageIsAbsolute
-          ? foundPost.image
-          : `${SITE_ORIGIN}${foundPost.image.startsWith("/") ? "" : "/"}${foundPost.image}`
-        : `${SITE_ORIGIN}/images/social-default.jpg`; // create this or change
+
+      // Always route through resolver so .jpg/.png/.webp and subpaths all work
+      const resolvedPath = resolvePublicImage(foundPost.image); // e.g., "/images/blog/foo.jpg"
+      const absoluteImageUrl = `${SITE_ORIGIN}${resolvedPath}`;
 
       const title = foundPost.title || "Seattle Digital Studio";
       const description =
@@ -206,10 +204,13 @@ export default function BlogPost() {
       {post.image && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <img
-            src={post.image}
+            src={resolvePublicImage(post.image)}
             alt={post.title}
             className="w-full h-auto rounded-xl shadow-md"
             loading="eager"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = "/images/fallback-social.jpg";
+            }}
           />
         </div>
       )}

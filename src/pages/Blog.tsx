@@ -4,6 +4,7 @@ import { BookOpen, Calendar, ArrowRight, Search, Filter, Clock, User, Tag } from
 import { getAllPosts, getFeaturedPosts, getPostsByCategory, searchPosts, blogCategories, formatDate, getCategoryColor } from '../utils/blogUtils';
 import { BlogPost } from '../types/blog';
 import RSSFeedGenerator from '../components/RSSFeedGenerator';
+import { resolvePublicImage } from "../utils/resolveImage";
 
 const Blog: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -205,9 +206,13 @@ const Blog: React.FC = () => {
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={post.image}
+                      src={resolvePublicImage(post.image)}
                       alt={post.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = "/images/fallback-social.jpg";
+                      }}
                     />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-semibold rounded-full">
