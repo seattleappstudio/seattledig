@@ -2,13 +2,15 @@
 
 const BOT_PATTERNS = [
   /googlebot/i, /bingbot/i, /yandex/i, /duckduckbot/i, /baiduspider/i,
-  /facebookexternalhit/i, // Facebook
-  /linkedinbot/i,         // LinkedIn
-  /twitterbot/i, /slackbot/i, /discordbot/i,
-  /whatsapp/i, /telegrambot/i, /pinterestbot/i,
-  /skypeuripreview/i, /embedly/i, /quora link preview/i,
+  /facebookexternalhit/i, /linkedinbot/i, /twitterbot/i,  // <= twitterbot covered
+  /slackbot/i, /discordbot/i, /whatsapp/i, /telegrambot/i,
+  /pinterestbot/i, /skypeuripreview/i, /embedly/i, /quora link preview/i,
   /vkShare/i, /redditbot/i
 ];
+
+// IMPORTANT: do not prerender assets
+const STATIC_EXT = /\.(?:png|jpe?g|webp|gif|svg|ico|css|js|mjs|map|txt|xml|pdf|json|woff2?|ttf|eot|mp4|webm|ogv|mp3|ogg|wav)$/i;
+
 
 function isBot(ua: string) {
   return BOT_PATTERNS.some((r) => r.test(ua));

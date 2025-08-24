@@ -41,6 +41,10 @@ export default function BlogPost() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // inside your SEO/meta useEffect:
+    const ogPath = resolveOgImagePath(foundPost.image);   // JPG/PNG-first
+    const absoluteImageUrl = `${SITE_ORIGIN}${ogPath}`;   // use this for og:image & twitter:image
+
     const loadPost = async () => {
       if (!slug) {
         setLoading(false);
